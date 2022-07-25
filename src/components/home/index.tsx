@@ -2,6 +2,7 @@ import React from "react";
 import { FunnyCards } from "../funnyCards";
 import { FunnyForm } from "../funnyForm";
 import { FunnyCard } from "../funnyCard";
+import { FunnyNavbar } from "../funnyNavbar";
 type props = {
     data: {
         id: number,
@@ -14,7 +15,7 @@ export class Home extends React.Component<props>{
     render() {
         return (
             <>
-            {console.log("this.props.data : " , this.props.data)}
+               
                 <FunnyCards data={this.props.data} />
             </>
         );

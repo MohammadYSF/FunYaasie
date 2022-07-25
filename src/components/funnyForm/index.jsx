@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import classes from './styles.module.css';
 export function FunnyForm({ onAdd }) {
-  const { register, handleSubmit, formState: { errors, touchedFields } } = useForm();
-  const onSubmit = data => { console.log("onsubmit", data);onAdd(data) };
+  const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors, touchedFields, isSubmitSuccessful, }, reset, } = useForm({
+    defaultValues: {
+      id: -1,
+      reporter: "",
+      subject: "",
+      description: ""
+    }
+  });
+  const onSubmit = (data) => {
+    console.log("onsubmit", data);
+    onAdd(data);
+    reset();
+    alert("سوژه مد نظر شما با موفقیت ثبت گردید");
+    navigate("/");
+  };
   console.log(errors);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-50 mt-5 mx-auto">
       <div className="mb-3">
@@ -34,10 +48,10 @@ export function FunnyForm({ onAdd }) {
                 value: /^[\u0600-\u06FF\s]+$/i,
                 message: 'زبان پارسی را پاس بداریم'
               }
-           })} />
-        {}
-            < div id = "emailHelp"
-          className = {`form-text text-sm rounded-0 ${classes.customErrorText}`}
+            })} />
+        { }
+        < div id="emailHelp"
+          className={`form-text text-sm rounded-0 ${classes.customErrorText}`}
 
           style={{ textAlign: 'right' }}>
 
@@ -49,8 +63,8 @@ export function FunnyForm({ onAdd }) {
       <div className="mb-3">
 
         <input type="text" placeholder="گوینده"
-          className={` border-top-0 border-start-0 border-end-0 form-control rounded-0 ${classes.customInput}`} id="speaker" name="speaker"
-          {...register("speaker",
+          className={` border-top-0 border-start-0 border-end-0 form-control rounded-0 ${classes.customInput}`} id="subject" name="subject"
+          {...register("subject",
             {
               required:
               {
@@ -79,7 +93,7 @@ export function FunnyForm({ onAdd }) {
 
           style={{ textAlign: 'right' }}>
 
-          {(errors != null && errors.speaker != null) && errors.speaker.message}
+          {(errors != null && errors.subject != null) && errors.subject.message}
 
         </div>
       </div>

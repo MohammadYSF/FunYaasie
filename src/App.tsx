@@ -6,8 +6,9 @@ import { Home } from './components/home';
 import { FunnyForm } from './components/funnyForm';
 import { BrowserRouter, Router, Routes } from 'react-router-dom';
 import { funInfo } from './types/funInfoType';
+import { FunnyNavbar } from './components/funnyNavbar';
 function App() {
-  const [data , setData ] = useState([
+  const [data, setData] = useState([
     {
       "id": 1,
       "reporter": "محمد یوسفیان",
@@ -27,7 +28,7 @@ function App() {
       "description": "بدون شرح"
     }
   ]);
-  
+
   const checkIdExistanceBefore = (id: number): boolean => {
     for (let i = 0; i < data.length; i++) {
       const element = data[i];
@@ -53,20 +54,24 @@ function App() {
       description: item.description,
       reporter: item.reporter
     };
-    let newData:funInfo[] = data;
+    let newData: funInfo[] = data;
     newData.push(newObject);
     setData(newData);
-    console.log("state data is : " , data);
+    console.log("state data is : ", data);
   };
   return (
     <div className="App container">
       {/* <FunnyForm /> */}
+      {/* <FunnyNavbar /> */}
+
       <BrowserRouter>
+        <FunnyNavbar />
         <Routes>
-          <Route  path='/' element={<Home data={data} />} />
+          <Route path='/' element={<Home data={data} />} />
           <Route path='/funnyform' element={<FunnyForm onAdd={addNew} />} />
         </Routes>
       </BrowserRouter>
+
     </div>
   );
 }

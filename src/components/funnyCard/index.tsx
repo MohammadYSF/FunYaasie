@@ -1,12 +1,14 @@
 import React from "react";
 import classes from './styles.module.css';
 type props = {
-    id:number,
-    reporter:string,
-    subject:string,
-    description:string
+    id: number,
+    reporter: string,
+    subject: string,
+    description: string,
+    edit: (id: number) => void,
+    delete: (id: number) => void
 };
-export  class FunnyCard extends React.Component<props> {
+export class FunnyCard extends React.Component<props> {
     render() {
         return (
             <>
@@ -17,6 +19,10 @@ export  class FunnyCard extends React.Component<props> {
                         <p className="card-text"><span className={`${classes.label}`}>توضیحات</span> :
                             {this.props.description}
                         </p>
+                        <div>
+                            <u><a type="button" onClick={() => this.props.delete(this.props.id)}>حذف</a></u>
+                            <u><a type="button" onClick={() => this.props.edit(this.props.id)}>ویرایش</a></u>
+                        </div>
                     </div>
                 </div>
 
