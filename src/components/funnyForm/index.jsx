@@ -1,14 +1,15 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import classes from './styles.module.css';
-export function FunnyForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
+export function FunnyForm({ onAdd }) {
+  const { register, handleSubmit, formState: { errors, touchedFields } } = useForm();
+  const onSubmit = data => { console.log("onsubmit", data);onAdd(data) };
   console.log(errors);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-50 mt-5 mx-auto">
       <div className="mb-3">
+        <input type="number" value={-1} id="id" name="id" className="d-none" {...register("id")} />
         <input type="text" placeholder="گزارش دهنده"
           className={` border-top-0  border-start-0 border-end-0 form-control rounded-0 ${classes.customInput}`} id="reporter" name="reporter"
           {...register("reporter",
@@ -33,10 +34,10 @@ export function FunnyForm() {
                 value: /^[\u0600-\u06FF\s]+$/i,
                 message: 'زبان پارسی را پاس بداریم'
               }
-            })} />
-        { }
-        <div id="emailHelp"
-                 className={`form-text text-sm rounded-0 ${classes.customErrorText}`} 
+           })} />
+        {}
+            < div id = "emailHelp"
+          className = {`form-text text-sm rounded-0 ${classes.customErrorText}`}
 
           style={{ textAlign: 'right' }}>
 
