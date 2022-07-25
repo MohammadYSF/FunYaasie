@@ -1,0 +1,21 @@
+.customInput{
+    border-bottom: 1px solid whitesmoke !important;
+    color: whitesmoke !important;
+    background-color: transparent !important;
+}
+.customInput::placeholder{
+    color: rgba(255, 255, 255, 0.281) !important;
+}
+.customInput:focus{
+   
+    border-bottom: 2px solid rgb(199, 130, 3) !important;
+    box-shadow: none !important;
+}
+.customBtn{
+    background-color: orange !important;
+    border: 1px solid #00334F !important;
+    color: #00334F !important;
+}
+.customErrorText{
+    color: rgb(199, 130, 3) !important;
+}
