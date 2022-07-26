@@ -1,5 +1,5 @@
 import React from "react";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { funInfo } from "../../types/funInfoType";
 import classes from './styles.module.css';
 type props = {
@@ -12,7 +12,7 @@ type props = {
     redirectToEditForm: (item: funInfo) => void
 };
 export function FunnyCard(props: props) {
-    const navigate= useNavigate();
+    const navigate = useNavigate();
     return (
         <>
             <div className="card w-100 rounded-0 bg-transparent text-light border border-light mt-3 ">
@@ -23,19 +23,19 @@ export function FunnyCard(props: props) {
                         {props.description}
                     </p>
                     <div>
-                        <u><a type="button" onClick={() => props.delete(props.id)}>حذف</a></u>
-                        <u><a type="button"
+                        <a type="button" className="mx-2 text-decoration-none text-danger" onClick={() => props.delete(props.id)}>حذف</a>
+                        <a type="button" className="mx-2 text-decoration-none text-info"
                             onClick={() => {
                                 props.redirectToEditForm({
                                     id: props.id,
                                     description: props.description,
                                     reporter: props.reporter,
                                     subject: props.subject
-                                    
+
                                 });
                                 navigate("/funnyform");
 
-                            }}>ویرایش</a></u>
+                            }}>ویرایش</a>
                     </div>
                 </div>
             </div>
