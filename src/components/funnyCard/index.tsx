@@ -1,4 +1,6 @@
 import React from "react";
+import {useNavigate } from "react-router-dom";
+import { funInfo } from "../../types/funInfoType";
 import classes from './styles.module.css';
 type props = {
     id: number,
@@ -6,28 +8,40 @@ type props = {
     subject: string,
     description: string,
     // edit: (id: number) => void,
-    delete: (id: number) => boolean
+    delete: (id: number) => boolean,
+    redirectToEditForm: (item: funInfo) => void
 };
-export class FunnyCard extends React.Component<props> {
-    render() {
-        return (
-            <>
-                <div className="card w-100 rounded-0 bg-transparent text-light border border-light mt-3 ">
-                    <div className="card-body">
-                        <h5 className="card-title"><span className={`${classes.label}`}>گزارش دهنده</span> : {this.props.reporter}</h5>
-                        <h5 className="card-subtitle"><span className={`${classes.label}`}>سوژه</span> : {this.props.subject}</h5>
-                        <p className="card-text"><span className={`${classes.label}`}>توضیحات</span> :
-                            {this.props.description}
-                        </p>
-                        <div>
-                            <u><a type="button" onClick={() => this.props.delete(this.props.id)}>حذف</a></u>
-                            {/* <u><a type="button" onClick={() => this.props.edit(this.props.id)}>ویرایش</a></u> */}
-                        </div>
+export function FunnyCard(props: props) {
+    const navigate= useNavigate();
+    return (
+        <>
+            <div className="card w-100 rounded-0 bg-transparent text-light border border-light mt-3 ">
+                <div className="card-body">
+                    <h5 className="card-title"><span className={`${classes.label}`}>گزارش دهنده</span> : {props.reporter}</h5>
+                    <h5 className="card-subtitle"><span className={`${classes.label}`}>سوژه</span> : {props.subject}</h5>
+                    <p className="card-text"><span className={`${classes.label}`}>توضیحات</span> :
+                        {props.description}
+                    </p>
+                    <div>
+                        <u><a type="button" onClick={() => props.delete(props.id)}>حذف</a></u>
+                        <u><a type="button"
+                            onClick={() => {
+                                props.redirectToEditForm({
+                                    id: props.id,
+                                    description: props.description,
+                                    reporter: props.reporter,
+                                    subject: props.subject
+                                    
+                                });
+                                navigate("/funnyform");
+
+                            }}>ویرایش</a></u>
                     </div>
                 </div>
+            </div>
 
 
-            </>
-        );
-    }
+        </>
+
+    );
 }

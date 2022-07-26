@@ -1,31 +1,47 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { FormMode } from '../../enums/formModes';
+import { funInfo } from '../../types/funInfoType';
 import classes from './styles.module.css';
-export function FunnyForm({ onAdd }) {
+type formProps = {
+  onAdd: (item: funInfo) => void,
+  onEdit: (item: funInfo) => boolean,
+  fun: funInfo,
+  formMode: FormMode
+};
+export function FunnyForm({ onAdd, onEdit, fun, formMode }: formProps) {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors, touchedFields, isSubmitSuccessful, }, reset, } = useForm({
     defaultValues: {
-      id: -1,
-      reporter: "",
-      subject: "",
-      description: ""
+      id: formMode == FormMode.Edit ? fun.id : -1,
+      reporter: formMode == FormMode.Edit ? fun.reporter : '',
+      subject: formMode == FormMode.Edit ? fun.subject : '',
+      description: formMode == FormMode.Edit ? fun.description : ''
     }
   });
-  const onSubmit = (data) => {
-    console.log("onsubmit", data);
-    onAdd(data);
+  const onSubmit = (data: any) => {
+    // console.log("onsubmit", data);
+    if (formMode == FormMode.New) {
+      onAdd(data);
+    }
+    else {
+      onEdit(data);
+    }
     reset();
-    alert("سوژه مد نظر شما با موفقیت ثبت گردید");
     navigate("/");
   };
-  console.log(errors);
+  // console.log(errors);
   return (
+
     <form onSubmit={handleSubmit(onSubmit)} className="w-50 mt-5 mx-auto">
       <div className="mb-3">
-        <input type="number" value={-1} id="id" name="id" className="d-none" {...register("id")} />
+        <input type="number"
+          // value={(formMode == FormMode.New) ? fun.id : -1}
+          id="id" /*name={"id"}*/ className="d-none" {...register("id")} />
         <input type="text" placeholder="گزارش دهنده"
-          className={` border-top-0  border-start-0 border-end-0 form-control rounded-0 ${classes.customInput}`} id="reporter" name="reporter"
+          // value={(formMode == FormMode.Edit) ? fun.reporter : undefined}
+          className={` border-top-0  border-start-0 border-end-0 form-control rounded-0 ${classes.customInput}`} id="reporter" /*name="reporter"*/
           {...register("reporter",
             {
               required:
@@ -63,7 +79,8 @@ export function FunnyForm({ onAdd }) {
       <div className="mb-3">
 
         <input type="text" placeholder="گوینده"
-          className={` border-top-0 border-start-0 border-end-0 form-control rounded-0 ${classes.customInput}`} id="subject" name="subject"
+          // value={formMode == FormMode.Edit ? fun.subject : undefined}
+          className={` border-top-0 border-start-0 border-end-0 form-control rounded-0 ${classes.customInput}`} id="subject" /*name="subject"*/
           {...register("subject",
             {
               required:
@@ -101,8 +118,9 @@ export function FunnyForm({ onAdd }) {
       <div className="mb-3">
 
         <input type="text" placeholder="توضیحات تکمیلی"
+          // value={formMode == FormMode.Edit ? fun.description : undefined}
           className={` border-top-0 border-start-0 border-end-0 form-control rounded-0 ${classes.customInput}`} id="description"
-          name="description"
+          /*name="description"*/
           {...register("description",
             {
               required:

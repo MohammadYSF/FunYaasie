@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Route } from 'react-router';
 import { Home } from './components/home';
@@ -7,7 +6,11 @@ import { FunnyForm } from './components/funnyForm';
 import { BrowserRouter, Router, Routes } from 'react-router-dom';
 import { funInfo } from './types/funInfoType';
 import { FunnyNavbar } from './components/funnyNavbar';
+import { FormMode } from './enums/formModes';
 function App() {
+  //const navigate = useNavigate();
+  const [edittingFun, setEdittingFun] = useState({} as funInfo);
+  const [formMode, setFormMode] = useState(FormMode.New);
   const [data, setData] = useState([
     {
       "id": 1,
@@ -27,7 +30,7 @@ function App() {
       "subject": "سید اس کیو ال سرور",
       "description": "بدون شرح"
     }
-  ]);
+  ] as funInfo[]);
 
   const checkIdExistanceBefore = (id: number): boolean => {
     for (let i = 0; i < data.length; i++) {
@@ -57,7 +60,6 @@ function App() {
     let newData: funInfo[] = data;
     newData.push(newObject);
     setData(newData);
-    console.log("state data is : ", data);
   };
   const findFunById = (id: number): funInfo | null => {
     for (let i = 0; i < data.length; i++) {
@@ -71,16 +73,13 @@ function App() {
   const findIndexByFun = (fun: funInfo): number => {
     for (let i = 0; i < data.length; i++) {
       const element = data[i];
-      if (element == fun) {
+      if (element.id == fun.id) {
         return i;
       }
     }
     return -1;
   }
   const deleteFunById = (id: number): boolean => {
-    console.log("i am in the delete func");
-    console.log("id is : ", id);
-    console.log(findFunById(id));
     if (findFunById(id) == null) {
       return false;
     }
@@ -96,10 +95,29 @@ function App() {
         }
 
       }
-      console.log("new data after filtering is : ", newData);
       setData(newData);
       return true;
     }
+  }
+  const editFun = (item: funInfo): boolean => {
+    let index: number = findIndexByFun(item);
+    if (index === -1) {
+      return false;
+    }
+    else {
+      let newData: funInfo[] = data;
+      newData[index].description = item.description;
+      newData[index].subject = item.subject;
+      newData[index].reporter = item.reporter;
+      setData(newData);
+      setFormMode(FormMode.New);
+      return true;
+    }
+  }
+  const redirectToEditForm = (item: funInfo): void => {
+    setFormMode(FormMode.Edit);
+    setEdittingFun(item);
+    //navigate('funnyform');
   }
   return (
     <div className="App container">
@@ -109,8 +127,8 @@ function App() {
       <BrowserRouter>
         <FunnyNavbar />
         <Routes>
-          <Route path='/' element={<Home data={data} delete={deleteFunById} />} />
-          <Route path='/funnyform' element={<FunnyForm onAdd={addNew} />} />
+          <Route path='/' element={<Home data={data} delete={deleteFunById} redirectToEditForm={redirectToEditForm} />} />
+          <Route path='/funnyform' element={<FunnyForm onAdd={addNew} fun={edittingFun} onEdit={editFun} formMode={formMode} />} />
         </Routes>
       </BrowserRouter>
 
