@@ -15,11 +15,11 @@ export function FunnyCard(props: props) {
     const navigate = useNavigate();
     return (
         <>
-            <div className="card w-100 rounded-0 bg-transparent text-light border border-light mt-3 ">
+            <div className={`card w-75 mx-auto rounded-0 bg-transparent text-light border border-light mt-5 border-0 ${classes.customCard}`}>
                 <div className="card-body">
                     <h5 className="card-title"><span className={`${classes.label}`}>گزارش دهنده</span> : {props.reporter}</h5>
                     <h5 className="card-subtitle"><span className={`${classes.label}`}>سوژه</span> : {props.subject}</h5>
-                    <p className="card-text"><span className={`${classes.label}`}>توضیحات</span> :
+                    <p className="card-text text-white-50"><span className={`${classes.label}`}>توضیحات</span> :
                         {props.description}
                     </p>
                     <div>

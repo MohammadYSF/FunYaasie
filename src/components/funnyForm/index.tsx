@@ -133,11 +133,11 @@ export function FunnyForm({ onAdd, onEdit, fun, formMode }: formProps) {
                 value: 1000,
                 message: 'زیادی داری می نویسی دیگه'
               },
-              pattern:
-              {
-                value: /^[\u0600-\u06FF\s]+$/i,
-                message: 'زبان پارسی را پاس بداریم'
-              }
+              // pattern:
+              // {
+              //   value: /^[\u0600-\u06FF\s]+$/i,
+              //   message: 'زبان پارسی را پاس بداریم'
+              // }
             })} />
         <div id="emailHelp"
           className={`form-text text-sm rounded-0 ${classes.customErrorText}`}

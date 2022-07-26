@@ -43,7 +43,19 @@ body {
   font-family: Vazirmatn, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('../public/bg.jpg');
+  background-position: center !important;
+  background-size: cover !important;
+
+}
+body::before{
+  content: normal;
   background-color: #343434 !important;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 code {
