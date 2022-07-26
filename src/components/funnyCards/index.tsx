@@ -9,8 +9,8 @@ type props = {
         subject: string,
         description: string,
     }[],
-    edit: (id: number) => void,
-    delete: (id: number) => void
+    // edit: (id: number) => void,
+    delete: (id: number) => boolean
 
 }
 
@@ -19,7 +19,7 @@ export class FunnyCards extends React.Component<props> {
         return (
             <>
                 {this.props.data.map((item) => {
-                    return <FunnyCard delete={this.props.delete} edit={this.props.edit} id={item.id} subject={item.subject} reporter={item.reporter} description={item.description} />
+                    return <FunnyCard delete={this.props.delete} /*edit={this.props.edit}*/ id={item.id} subject={item.subject} reporter={item.reporter} description={item.description} />
                 })}
             </>
         );

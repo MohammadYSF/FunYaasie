@@ -22,7 +22,7 @@ function App() {
       "description": "بدون شرح"
     },
     {
-      "id": 2,
+      "id": 3,
       "reporter": "وحید عقیل پور",
       "subject": "سید اس کیو ال سرور",
       "description": "بدون شرح"
@@ -59,6 +59,48 @@ function App() {
     setData(newData);
     console.log("state data is : ", data);
   };
+  const findFunById = (id: number): funInfo | null => {
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i];
+      if (element.id === id) {
+        return element;
+      }
+    }
+    return null;
+  }
+  const findIndexByFun = (fun: funInfo): number => {
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i];
+      if (element == fun) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  const deleteFunById = (id: number): boolean => {
+    console.log("i am in the delete func");
+    console.log("id is : ", id);
+    console.log(findFunById(id));
+    if (findFunById(id) == null) {
+      return false;
+    }
+    else {
+      let newData: funInfo[] = [];
+      for (let i = 0; i < data.length; i++) {
+        const element: funInfo = data[i];
+        if (element.id != id) {
+          newData.push(element);
+        }
+        else {
+          //do nothing
+        }
+
+      }
+      console.log("new data after filtering is : ", newData);
+      setData(newData);
+      return true;
+    }
+  }
   return (
     <div className="App container">
       {/* <FunnyForm /> */}
@@ -67,7 +109,7 @@ function App() {
       <BrowserRouter>
         <FunnyNavbar />
         <Routes>
-          <Route path='/' element={<Home data={data} />} />
+          <Route path='/' element={<Home data={data} delete={deleteFunById} />} />
           <Route path='/funnyform' element={<FunnyForm onAdd={addNew} />} />
         </Routes>
       </BrowserRouter>

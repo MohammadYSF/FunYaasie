@@ -9,14 +9,15 @@ type props = {
         reporter: string,
         subject: string,
         description: string
-    }[]
+    }[],
+    delete:(id:number) => boolean
 };
 export class Home extends React.Component<props>{
     render() {
         return (
             <>
                
-                <FunnyCards data={this.props.data} />
+                <FunnyCards data={this.props.data} delete={this.props.delete}/>
             </>
         );
     }

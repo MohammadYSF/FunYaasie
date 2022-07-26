@@ -5,8 +5,8 @@ type props = {
     reporter: string,
     subject: string,
     description: string,
-    edit: (id: number) => void,
-    delete: (id: number) => void
+    // edit: (id: number) => void,
+    delete: (id: number) => boolean
 };
 export class FunnyCard extends React.Component<props> {
     render() {
@@ -21,7 +21,7 @@ export class FunnyCard extends React.Component<props> {
                         </p>
                         <div>
                             <u><a type="button" onClick={() => this.props.delete(this.props.id)}>حذف</a></u>
-                            <u><a type="button" onClick={() => this.props.edit(this.props.id)}>ویرایش</a></u>
+                            {/* <u><a type="button" onClick={() => this.props.edit(this.props.id)}>ویرایش</a></u> */}
                         </div>
                     </div>
                 </div>
